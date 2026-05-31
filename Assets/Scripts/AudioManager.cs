@@ -17,6 +17,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip buttonClickSFX;
     public AudioClip swapSFX;
     public AudioClip pieceLockedSFX;
+    public AudioClip chainBreakSFX;
 
     private bool musicEnabled;
     private bool sfxEnabled;
@@ -136,6 +137,11 @@ public class AudioManager : MonoBehaviour
         vibrationEnabled = enabled;
         PlayerPrefs.SetInt("VibrationEnabled", enabled ? 1 : 0);
         PlayerPrefs.Save();
+    }
+
+    public void PlayChainBreak()
+    {
+        PlaySFX(chainBreakSFX);
     }
 
     public bool IsMusicEnabled() => musicEnabled;

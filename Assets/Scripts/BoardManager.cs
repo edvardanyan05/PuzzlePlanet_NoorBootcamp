@@ -31,6 +31,7 @@ public class BoardManager : MonoBehaviour
     [Header("Frozen Pieces")]
     public Piece[] frozenPieces;
     public int unlockAfterLocked = 0;
+    public GameObject[] chains;
 
     private float currentTime;
     private bool hasWon = false;
@@ -231,18 +232,35 @@ public class BoardManager : MonoBehaviour
         Debug.Log("YOU LOSE!");
     }
 
+    private bool frozenUnlocked = false;
     void CheckFrozenUnlock()
     {
+        if (frozenUnlocked) return;
         if (frozenPieces == null || frozenPieces.Length == 0) return;
+        if (unlockAfterLocked <= 0) return;
 
         int lockedCount = 0;
         foreach (Piece piece in allPieces)
             if (piece.IsLocked()) lockedCount++;
 
         if (lockedCount >= unlockAfterLocked)
+        {
+            frozenUnlocked = true;
+            AudioManager.Instance?.PlayChainBreak();
+
             foreach (Piece piece in frozenPieces)
                 piece.Unfreeze();
+
+            foreach (GameObject chain in chains)
+            {
+                if (chain == null) continue;
+                chain.transform.DOScale(Vector3.zero, 0.4f)
+                    .SetEase(Ease.InBack)
+                    .OnComplete(() => chain.SetActive(false));
+            }
+        }
     }
+
     public bool IsPaused() => isPaused;
 
 }
