@@ -1467,6 +1467,11 @@ Transform:
   - {fileID: 1176202682}
   m_Father: {fileID: 1024038791}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &117355013 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 7d370d58082ab1344a04d9267f00b841, type: 3}
+  m_PrefabInstance: {fileID: 450932071}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &124370037
 GameObject:
   m_ObjectHideFlags: 0
@@ -1936,8 +1941,8 @@ MonoBehaviour:
   - {fileID: 2044174856}
   unlockAfterLocked: 4
   chains:
-  - {fileID: 1723866208}
-  - {fileID: 1610613822}
+  - {fileID: 1138760589}
+  - {fileID: 117355013}
 --- !u!1 &257380579
 GameObject:
   m_ObjectHideFlags: 0
@@ -7486,6 +7491,11 @@ Transform:
   - {fileID: 978698480}
   m_Father: {fileID: 1181924108}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1138760589 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 7d370d58082ab1344a04d9267f00b841, type: 3}
+  m_PrefabInstance: {fileID: 40540970}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1140199687
 GameObject:
   m_ObjectHideFlags: 0
@@ -11183,11 +11193,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e461fb2c202878b4cae23d098621daf0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ButtonSound
---- !u!1 &1610613822 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 7d370d58082ab1344a04d9267f00b841, type: 3}
-  m_PrefabInstance: {fileID: 450932071}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1610613823 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7d370d58082ab1344a04d9267f00b841, type: 3}
@@ -12089,11 +12094,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 923812550}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1723866208 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 7d370d58082ab1344a04d9267f00b841, type: 3}
-  m_PrefabInstance: {fileID: 40540970}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1723866209 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7d370d58082ab1344a04d9267f00b841, type: 3}
