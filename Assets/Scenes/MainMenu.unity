@@ -806,7 +806,7 @@ MonoBehaviour:
   buttonClickSFX: {fileID: 8300000, guid: d83e3a9a835f3fa48be4cdf68edd06db, type: 3}
   swapSFX: {fileID: 8300000, guid: 2b64db7716ca71047b6487c0fd61e2a2, type: 3}
   pieceLockedSFX: {fileID: 8300000, guid: ffdaa81ea808a0948af2c0c4f0b31bdc, type: 3}
-  chainBreakSFX: {fileID: 8300000, guid: de2d575048669de408d8b1c530983660, type: 3}
+  chainBreakSFX: {fileID: 8300000, guid: 235bc61f5e9d552468fb91aed959e3e3, type: 3}
 --- !u!4 &155862016
 Transform:
   m_ObjectHideFlags: 0

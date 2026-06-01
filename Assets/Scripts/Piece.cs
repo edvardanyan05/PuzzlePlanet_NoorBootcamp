@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 
 public class Piece : MonoBehaviour
@@ -34,6 +35,7 @@ public class Piece : MonoBehaviour
         CheckIfCorrect();
     }
 
+    private float dragZ;
     void OnMouseDown()
     {
         if (isLocked) return;
@@ -42,6 +44,7 @@ public class Piece : MonoBehaviour
         boardManager.ResetHintTimer();
         isDragging = true;
         visual.localPosition = Vector3.up * liftAmount;
+        dragZ = Camera.main.WorldToScreenPoint(transform.position).z;
         offset = transform.position - GetMouseWorldPosition();
     }
 
@@ -70,7 +73,7 @@ public class Piece : MonoBehaviour
     Vector3 GetMouseWorldPosition()
     {
         Vector3 mousePos = Input.mousePosition;
-        mousePos.z = 10f;
+        mousePos.z = dragZ;
         return Camera.main.ScreenToWorldPoint(mousePos);
     }
 
@@ -119,6 +122,7 @@ public class Piece : MonoBehaviour
         {
             isLocked = true;
             PlaySparkle();
+            ApplyLockedVisual();
             Debug.Log(gameObject.name + " LOCKED");
             AudioManager.Instance?.PlayPieceLocked();
         }
@@ -127,6 +131,18 @@ public class Piece : MonoBehaviour
             isLocked = false;
         }
         boardManager.CheckWin();
+    }
+
+    void ApplyLockedVisual()
+    {
+        Transform cube = visual.Find("Cube_1");
+        if (cube == null) return;
+
+        Renderer rend = cube.GetComponent<Renderer>();
+        if (rend == null) return;
+
+        rend.material.DOColor(new Color(0.7f, 0.7f, 0.7f, 1f), 0.4f)
+            .SetEase(Ease.OutQuad);
     }
 
     void PlaySparkle()
