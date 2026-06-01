@@ -28,6 +28,11 @@ public class BoardManager : MonoBehaviour
     [Header("Timer Bar")]
     public UnityEngine.UI.Image timerBar;
 
+    [Header("Frozen Pieces")]
+    public Piece[] frozenPieces;
+    public int unlockAfterLocked = 0;
+    public GameObject[] chains;
+
     private float currentTime;
     private bool hasWon = false;
     private bool hasLost = false;
@@ -47,6 +52,9 @@ public class BoardManager : MonoBehaviour
     void Start()
     {
         currentTime = timeLimit;
+        if (frozenPieces != null)
+            foreach (Piece piece in frozenPieces)
+                piece.Freeze();
     }
 
     void Update()
@@ -97,28 +105,31 @@ public class BoardManager : MonoBehaviour
     void ShowHint()
     {
         Piece wrongPiece = null;
+        Piece targetPiece = null;
+
         foreach (Piece piece in allPieces)
         {
-            if (!piece.IsLocked())
+            if (piece.IsLocked() || piece.IsFrozen()) continue;
+
+            Piece target = null;
+            foreach (Piece other in allPieces)
+            {
+                if (other != piece && other.currentPos == piece.correctPos && !other.IsFrozen())
+                {
+                    target = other;
+                    break;
+                }
+            }
+
+            if (target != null)
             {
                 wrongPiece = piece;
+                targetPiece = target;
                 break;
             }
         }
 
-        if (wrongPiece == null) return;
-
-        Piece targetPiece = null;
-        foreach (Piece piece in allPieces)
-        {
-            if (piece != wrongPiece && piece.currentPos == wrongPiece.correctPos)
-            {
-                targetPiece = piece;
-                break;
-            }
-        }
-
-        if (targetPiece == null) return;
+        if (wrongPiece == null || targetPiece == null) return;
 
         hintPiece1 = wrongPiece;
         hintPiece2 = targetPiece;
@@ -164,6 +175,8 @@ public class BoardManager : MonoBehaviour
     public void CheckWin()
     {
         if (hasWon || hasLost) return;
+
+        CheckFrozenUnlock();
 
         foreach (Piece piece in allPieces)
             if (!piece.IsLocked()) return;
@@ -218,5 +231,36 @@ public class BoardManager : MonoBehaviour
         LosePanel.DOAnchorPosX(0f, 0.5f).SetEase(Ease.OutCubic);
         Debug.Log("YOU LOSE!");
     }
+
+    private bool frozenUnlocked = false;
+    void CheckFrozenUnlock()
+    {
+        if (frozenUnlocked) return;
+        if (frozenPieces == null || frozenPieces.Length == 0) return;
+        if (unlockAfterLocked <= 0) return;
+
+        int lockedCount = 0;
+        foreach (Piece piece in allPieces)
+            if (piece.IsLocked()) lockedCount++;
+
+        if (lockedCount >= unlockAfterLocked)
+        {
+            frozenUnlocked = true;
+            AudioManager.Instance?.PlayChainBreak();
+
+            foreach (Piece piece in frozenPieces)
+                piece.Unfreeze();
+
+            foreach (GameObject chain in chains)
+            {
+                if (chain == null) continue;
+                chain.transform.DOScale(Vector3.zero, 0.4f)
+                    .SetEase(Ease.InBack)
+                    .OnComplete(() => chain.SetActive(false));
+            }
+        }
+    }
+
     public bool IsPaused() => isPaused;
+
 }

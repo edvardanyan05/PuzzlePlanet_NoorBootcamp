@@ -25,6 +25,8 @@ public class Piece : MonoBehaviour
     private bool isDragging = false;
     private bool isLocked = false;
     private BoardManager boardManager;
+    private bool isFrozen = false;
+
 
     void Start()
     {
@@ -35,6 +37,7 @@ public class Piece : MonoBehaviour
     void OnMouseDown()
     {
         if (isLocked) return;
+        if (isFrozen) return;
         if (boardManager.IsPaused()) return;
         boardManager.ResetHintTimer();
         isDragging = true;
@@ -53,11 +56,12 @@ public class Piece : MonoBehaviour
     void OnMouseUp()
     {
         if (isLocked) return;
+        if (isFrozen) return;
+        if (boardManager.IsPaused()) return;
         isDragging = false;
         visual.localPosition = Vector3.zero;
-
         Piece nearestPiece = GetNearestPiece();
-        if (nearestPiece != null && !nearestPiece.isLocked)
+        if (nearestPiece != null && !nearestPiece.isLocked && !nearestPiece.IsFrozen())
             Swap(nearestPiece);
         else
             ReturnToPosition();
@@ -142,4 +146,7 @@ public class Piece : MonoBehaviour
 
     public bool IsLocked() => isLocked;
     public void DisableInteraction() => isLocked = true;
+    public void Freeze() => isFrozen = true;
+    public void Unfreeze() => isFrozen = false;
+    public bool IsFrozen() => isFrozen;
 }
