@@ -57,7 +57,7 @@ The timer reaches zero before the puzzle is completed.
 
 ### Try It Out
 
-📥 [Download Game](https://drive.google.com/file/d/1FxNLO_LN3Z8M-AccNCjO3jWaKQBjYbkX/view?usp=sharing)
+📥 [Download Game](https://drive.google.com/file/d/1FxYeaI_E7LrDb1Q0R4jjznkDHpOe9eax/view?usp=sharing)
 
 ### Gameplay Preview
 
